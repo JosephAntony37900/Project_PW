@@ -1,0 +1,29 @@
+.favorites {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  .favorite-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    width: 250px;
+    position: relative;
+  }
+  
+  .favorite-image {
+    width: 100%;
+    transition: transform 0.3s ease;
+  }
+  
+  .favorite-card:hover .favorite-image {
+    transform: scale(1.1);
+  }
+  
+  .favorite-info {
+    padding: 16px;
+    background: white;
+  }
+  

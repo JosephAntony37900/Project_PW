@@ -7,23 +7,30 @@ import { ListFavoritesComponent } from './favorites/list-favorites/list-favorite
 import { AddFavoriteComponent } from './favorites/add-favorite/add-favorite.component';
 
 
-import { HttpClientModule } from '@angular/common/http';
+import { ListEpisodiosComponent } from './list-episodios/list-episodios.component';
+import { PersonajesComponent } from './personajes/personajes.component';
+import {HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListFavoritesComponent,
-    AddFavoriteComponent
+    AddFavoriteComponent,
+    ListEpisodiosComponent,
+    PersonajesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
+
     HttpClientModule,
+    CommonModule
   ],
   providers: [
-    provideClientHydration()
+    provideHttpClient(withFetch()) 
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

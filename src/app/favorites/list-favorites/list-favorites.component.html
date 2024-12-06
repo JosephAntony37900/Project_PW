@@ -1,0 +1,12 @@
+<div class="favorites">
+    <div class="favorite-card" *ngFor="let character of favorites">
+      <img [src]="character.image" [alt]="character.name" class="favorite-image" />
+      <div class="favorite-info">
+        <h3>{{ character.name }}</h3>
+        <p>Dimensión: {{ character.origin?.name }}</p>
+        <p>Estado: {{ character.status }}</p>
+        <p>Episodios: {{ character.episode?.length }}</p>
+      </div>
+    </div>
+  </div>
+  

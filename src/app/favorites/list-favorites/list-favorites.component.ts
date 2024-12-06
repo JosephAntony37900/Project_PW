@@ -1,10 +1,17 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FavoriteService } from '../../service/favorite.service';
 
 @Component({
   selector: 'app-list-favorites',
   templateUrl: './list-favorites.component.html',
-  styleUrls: ['./list-favorites.component.css']
+  styleUrls: ['./list-favorites.component.css'],
 })
-export class ListFavoritesComponent {
-  @Input() favorites: any[] = [];
+export class ListFavoritesComponent implements OnInit {
+  favorites: any[] = [];
+
+  constructor(private favoriteService: FavoriteService) {}
+
+  ngOnInit(): void {
+    this.favorites = this.favoriteService.getFavorites();
+  }
 }

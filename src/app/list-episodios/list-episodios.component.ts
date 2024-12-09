@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EpisodeService } from '../service/service';
 import { RickService } from '../service/rick.service'; // Importamos el servicio RickService
+import { FavoriteService } from '../service/favorite.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-episodios',
@@ -16,13 +18,12 @@ export class ListEpisodiosComponent implements OnInit {
   showModal: boolean = false; // Controla la visibilidad del modal
   selectedCharacter: any = null; // Almacena el personaje seleccionado
 
-  constructor(
-    private episodeService: EpisodeService,
-    private rickService: RickService // Inyectamos el servicio RickService
-  ) {}
+
+  constructor(private episodeService: EpisodeService, public favoriteService: FavoriteService, private router: Router, private rickService: RickService ) {}
 
   ngOnInit(): void {
     this.loadAllEpisodes();
+    this.favorites = this.favoriteService.getFavorites();
   }
 
   loadAllEpisodes(): void {
@@ -57,16 +58,17 @@ export class ListEpisodiosComponent implements OnInit {
   }
 
   toggleFavorite(episode: any): void {
-    const isFavorite = this.isFavorite(episode);
+    const isFavorite = this.favoriteService.isFavorite(episode);
     if (isFavorite) {
-      this.favorites = this.favorites.filter((fav) => fav.id !== episode.id);
+      this.favoriteService.removeFavorite(episode);
     } else {
-      this.favorites.push(episode);
+      this.favoriteService.addFavorite(episode);
     }
+    this.favorites = this.favoriteService.getFavorites();
   }
 
-  isFavorite(episode: any): boolean {
-    return this.favorites.some((fav) => fav.id === episode.id);
+  viewCharactersByEpisode(episodeId: number): void {
+    this.router.navigate(['/add-favorite', { episodeId }]);
   }
 
   // Método para obtener los personajes por episodio

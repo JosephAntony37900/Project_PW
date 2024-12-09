@@ -15,6 +15,7 @@
             <th>Fecha de Emisión</th>
             <th>Episodio</th>
             <th>Acción</th>
+            <th>Personajes</th> <!-- Nueva columna para ver personajes -->
           </tr>
         </thead>
         <tbody>
@@ -28,9 +29,46 @@
                 {{ isFavorite(episode) ? 'Quitar' : 'Agregar' }}
               </button>
             </td>
+            <td>
+              <button (click)="getCharactersByEpisode(episode)">
+                Ver personajes
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
+    </div>
+  
+    <!-- Mostrar personajes del episodio -->
+    <div *ngIf="characters.length > 0" class="characters">
+      <h3>Personajes del Episodio</h3>
+      <div
+        class="character-card"
+        *ngFor="let character of characters"
+        (click)="openModal(character)"
+      >
+        <img [src]="character.image" [alt]="character.name" class="character-image" />
+        <h3>{{ character.name }}</h3>
+      </div>
+    </div>
+  
+    <!-- Modal -->
+    <div class="modal" *ngIf="showModal">
+      <div class="modal-content">
+        <span class="close" (click)="closeModal()">×</span>
+        <h2>{{ selectedCharacter?.name }}</h2>
+        <img
+          [src]="selectedCharacter?.image"
+          [alt]="selectedCharacter?.name"
+          class="modal-image"
+        />
+        <p><strong>Estado:</strong> {{ selectedCharacter?.status }}</p>
+        <p><strong>Dimensión:</strong> {{ selectedCharacter?.origin?.name }}</p>
+        <p><strong>Episodios:</strong> {{ selectedCharacter?.episode?.length }}</p>
+        <button class="btn-add" (click)="addToFavorites(selectedCharacter)">
+          <fa-icon></fa-icon> Añadir a Favoritos
+        </button>
+      </div>
     </div>
   
     <!-- Indicador de carga -->

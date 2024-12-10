@@ -25,7 +25,7 @@ export class RickService {
         const characterObservables = episode.characters.map((url: string) => this.http.get<any>(url));
         return forkJoin(characterObservables);
       }),
-      map((characters) => characters as any[]) // Aseguramos que el tipo sea any[]
+      map((characters) => characters as any[])
     );
   }
 }

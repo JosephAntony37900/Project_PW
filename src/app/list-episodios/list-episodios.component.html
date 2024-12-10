@@ -1,77 +1,50 @@
-<div>
-    <!-- Botones -->
-    <div class="buttons">
-      <button (click)="showEpisodes()">Episodios</button>
-      <button (click)="showFavorites()">Favoritos</button>
-    </div>
-  
-    <!-- Tabla de episodios -->
-    <div *ngIf="!isLoading">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Fecha de Emisión</th>
-            <th>Episodio</th>
-            <th>Acción</th>
-            <th>Personajes</th> <!-- Nueva columna para ver personajes -->
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let episode of displayedEpisodes">
-            <td>{{ episode.id }}</td>
-            <td>{{ episode.name }}</td>
-            <td>{{ episode.air_date }}</td>
-            <td>{{ episode.episode }}</td>
-            <td>
-              <button (click)="toggleFavorite(episode)">
-              </button>
-            </td>
-            <td>
-              <button (click)="getCharactersByEpisode(episode)">
-                Ver personajes
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  
-    <!-- Mostrar personajes del episodio -->
-    <div *ngIf="characters.length > 0" class="characters">
-      <h3>Personajes del Episodio</h3>
-      <div
-        class="character-card"
-        *ngFor="let character of characters"
-        (click)="openModal(character)"
-      >
-        <img [src]="character.image" [alt]="character.name" class="character-image" />
-        <h3>{{ character.name }}</h3>
-      </div>
-    </div>
-  
-    <!-- Modal -->
-    <div class="modal" *ngIf="showModal">
-      <div class="modal-content">
-        <span class="close" (click)="closeModal()">×</span>
-        <h2>{{ selectedCharacter?.name }}</h2>
-        <img
-          [src]="selectedCharacter?.image"
-          [alt]="selectedCharacter?.name"
-          class="modal-image"
-        />
-        <p><strong>Estado:</strong> {{ selectedCharacter?.status }}</p>
-        <p><strong>Dimensión:</strong> {{ selectedCharacter?.origin?.name }}</p>
-        <p><strong>Episodios:</strong> {{ selectedCharacter?.episode?.length }}</p>
-        <button class="btn-add" (click)="addToFavorites(selectedCharacter)">
-          <fa-icon></fa-icon> Añadir a Favoritos
-        </button>
-      </div>
-    </div>
-  
-    <!-- Indicador de carga -->
-    <div *ngIf="isLoading" class="loading">Cargando episodios...</div>
 
-  </div>
+<button (click)="toggleTable()"> 
+  {{ showFavoritesTable ? 'Mostrar Episodios Normales' : 'Mostrar Favoritos' }}
+</button>
+<div class="tabla" *ngIf="!showFavoritesTable" >
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Fecha</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let episode of episodes">
+        <td>{{ episode.id }}</td>
+        <td>{{ episode.name }}</td>
+        <td>{{ episode.air_date }}</td>
+        <td>
+          <button (click)="goToCharacters(episode.id)">Ver Personajes</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
+<div class="tabala-favoritos" *ngIf="showFavoritesTable">
+  <h2>Lista de Episodios (Favoritos)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Fecha</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let episode of episodes">
+        <td>{{ episode.id }}</td>
+        <td>{{ episode.name }}</td>
+        <td>{{ episode.air_date }}</td>
+        <td>
+          <button (click)="goToFavoriteCharacters(episode.id)">Ver Personajes Favoritos</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

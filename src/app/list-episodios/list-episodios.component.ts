@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EpisodeService } from '../service/service';
-import { RickService } from '../service/rick.service'; // Importamos el servicio RickService
+import { RickService } from '../service/rick.service';
 import { FavoriteService } from '../service/favorite.service';
 import { Router } from '@angular/router';
 
@@ -14,9 +14,10 @@ export class ListEpisodiosComponent implements OnInit {
   favorites: any[] = [];
   displayedEpisodes: any[] = [];
   isLoading: boolean = true;
-  characters: any[] = []; // Para almacenar los personajes
-  showModal: boolean = false; // Controla la visibilidad del modal
-  selectedCharacter: any = null; // Almacena el personaje seleccionado
+  characters: any[] = []; 
+  showModal: boolean = false; 
+  selectedCharacter: any = null;
+  showFavoritesTable: boolean = false;
 
 
   constructor(private episodeService: EpisodeService, public favoriteService: FavoriteService, private router: Router, private rickService: RickService ) {}
@@ -53,9 +54,7 @@ export class ListEpisodiosComponent implements OnInit {
     this.displayedEpisodes = this.episodes;
   }
 
-  showFavorites(): void {
-    this.displayedEpisodes = this.favorites;
-  }
+
 
   toggleFavorite(episode: any): void {
     const isFavorite = this.favoriteService.isFavorite(episode);
@@ -70,34 +69,13 @@ export class ListEpisodiosComponent implements OnInit {
   viewCharactersByEpisode(episodeId: number): void {
     this.router.navigate(['/add-favorite', { episodeId }]);
   }
-
-  // Método para obtener los personajes por episodio
-  getCharactersByEpisode(episode: any): void {
-    this.rickService.getCharactersByEpisode(episode.id).subscribe({
-      next: (characters) => {
-        this.characters = characters; // Almacenamos los personajes
-      },
-      error: (err) => {
-        console.error('Error al cargar los personajes:', err);
-      },
-    });
+  goToCharacters(episodeId: number): void {
+    this.router.navigate([`/personajes`, episodeId]);
   }
-
-  // Método para abrir el modal con la información del personaje
-  openModal(character: any): void {
-    this.selectedCharacter = character;
-    this.showModal = true; // Mostramos el modal
+  goToFavoriteCharacters(episodeId: number): void {
+    this.router.navigate([`/personajes-favoritos`, episodeId]); 
   }
-
-  // Método para cerrar el modal
-  closeModal(): void {
-    this.showModal = false;
-    this.selectedCharacter = null; // Limpiamos el personaje seleccionado
-  }
-
-  // Método para agregar el personaje a los favoritos
-  addToFavorites(character: any): void {
-    // Lógica para agregar el personaje a los favoritos
-    console.log('Añadido a favoritos:', character);
+  toggleTable(): void {
+    this.showFavoritesTable = !this.showFavoritesTable;
   }
 }

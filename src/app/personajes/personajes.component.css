@@ -1,0 +1,62 @@
+.characters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  .character-card {
+    width: 150px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .character-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .character-image {
+    width: 100%;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  .modal-image {
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  
+  .loading {
+    text-align: center;
+    font-size: 18px;
+  }
+  

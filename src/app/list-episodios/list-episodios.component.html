@@ -26,7 +26,6 @@
             <td>{{ episode.episode }}</td>
             <td>
               <button (click)="toggleFavorite(episode)">
-                {{ isFavorite(episode) ? 'Quitar' : 'Agregar' }}
               </button>
             </td>
             <td>
@@ -76,37 +75,3 @@
 
   </div>
 
-  <!-- Tabla de episodios -->
-  <div *ngIf="!isLoading">
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Fecha de Emisión</th>
-          <th>Episodio</th>
-          <th>Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let episode of displayedEpisodes">
-          <td>{{ episode.id }}</td>
-          <td>{{ episode.name }}</td>
-          <td>{{ episode.air_date }}</td>
-          <td>{{ episode.episode }}</td>
-          <td>
-            <button (click)="viewCharactersByEpisode(episode.id)">
-              Ver personajes
-            </button>
-            <button (click)="toggleFavorite(episode)">
-              {{ favoriteService.isFavorite(episode) ? 'Quitar de Favoritos' : 'Agregar a Favoritos' }}
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Indicador de carga -->
-  <div *ngIf="isLoading" class="loading">Cargando episodios...</div>
-</div>
